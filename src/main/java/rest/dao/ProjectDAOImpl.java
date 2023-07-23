@@ -98,6 +98,25 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
+    public void updateProject(String projectName, int projectId) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(
+                    DataBaseUtil.URL, DataBaseUtil.USER, DataBaseUtil.PASSWORD);
+            String SQL = "update project set title=?\n" +
+                    "where id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, projectName);
+            preparedStatement.setInt(2, projectId);
+            preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Worker> getAllWorkersByProjectTitle(String projectTitle) {
         try {
             Class.forName("org.postgresql.Driver");

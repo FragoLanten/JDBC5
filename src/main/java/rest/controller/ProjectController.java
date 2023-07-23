@@ -8,23 +8,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import rest.dao.ProjectDAO;
 import rest.entity.Project;
-import rest.entity.Worker;
+import rest.service.ProjectService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
-
     @Autowired
-    private ProjectDAO projectDAO;
+    private ProjectService projectService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Project>> getAll() {
 
-        List<Project> projects = projectDAO.getAllProjects();
+        List<Project> projects = projectService.getAllProjects();
 
         if (projects == null || projects.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -35,7 +33,7 @@ public class ProjectController {
 
     @GetMapping(value="/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> getWorker(@PathVariable String title) {
-        Project project = projectDAO.getProject(title);
+        Project project = projectService.getProject(title);
 
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

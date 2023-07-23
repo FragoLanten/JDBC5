@@ -97,6 +97,25 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     }
 
     @Override
+    public void updateDepartment(String departmentName, int departmentId) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(
+                    DataBaseUtil.URL, DataBaseUtil.USER, DataBaseUtil.PASSWORD);
+            String SQL = "update department set name=?\n" +
+                    "where id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, departmentName);
+            preparedStatement.setInt(2, departmentId);
+            preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Worker> getAllWorkersByDepartmentName(String departmentName) {
         try {
             Class.forName("org.postgresql.Driver");

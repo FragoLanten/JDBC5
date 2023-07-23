@@ -102,6 +102,26 @@ public class WorkerDAOImpl implements WorkerDAO {
     }
 
     @Override
+    public void updateWorker(int workerId, String workerName, int departmentId) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(
+                    DataBaseUtil.URL, DataBaseUtil.USER, DataBaseUtil.PASSWORD);
+            String SQL = "update worker set name=?, department_id=? where id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1,workerName);
+            preparedStatement.setInt(2,departmentId);
+            preparedStatement.setInt(3,workerId);
+            preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
     public List<Project> getAllProjectsByWorkerName (String workerName) {
         try {
             Class.forName("org.postgresql.Driver");

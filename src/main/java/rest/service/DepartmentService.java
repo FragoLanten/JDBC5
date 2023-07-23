@@ -1,11 +1,12 @@
-package rest.dao;
+package rest.service;
 
 import rest.entity.Department;
 import rest.entity.Worker;
 
 import java.util.List;
 
-public interface DepartmentDAO {
+public interface DepartmentService {
+
     public List<Department> getAllDepartments();
 
     public void saveDepartment(String departmentName);

@@ -1,11 +1,11 @@
-package rest.dao;
+package rest.service;
 
 import rest.entity.Project;
 import rest.entity.Worker;
 
 import java.util.List;
 
-public interface WorkerDAO {
+public interface WorkerService {
     public List<Worker> getAllWorkers();
 
     public void saveWorker(String workerName, int departmentId);

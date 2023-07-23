@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import rest.dao.DepartmentDAO;
-import rest.dao.ProjectDAO;
 import rest.entity.Department;
+import rest.service.DepartmentService;
 
 import java.util.List;
 
@@ -19,12 +18,12 @@ import java.util.List;
 public class DepartmentController {
 
     @Autowired
-    private DepartmentDAO departmentDAO;
+    private DepartmentService departmentService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Department>> getAll() {
 
-        List<Department> departments = departmentDAO.getAllDepartments();
+        List<Department> departments = departmentService.getAllDepartments();
 
         if (departments == null || departments.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -35,7 +34,7 @@ public class DepartmentController {
 
     @GetMapping(value="/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Department> getWorker(@PathVariable String name) {
-        Department department = departmentDAO.getDepartment(name);
+        Department department = departmentService.getDepartment(name);
 
         if (department == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

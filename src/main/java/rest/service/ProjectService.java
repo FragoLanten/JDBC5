@@ -1,11 +1,12 @@
-package rest.dao;
+package rest.service;
 
 import rest.entity.Project;
 import rest.entity.Worker;
 
 import java.util.List;
 
-public interface ProjectDAO {
+public interface ProjectService {
+
     public List<Project> getAllProjects();
 
     public void saveProject(String projectName);
@@ -17,4 +18,5 @@ public interface ProjectDAO {
     public void updateProject(String projectName, int projectId);
 
     public List<Worker> getAllWorkersByProjectTitle(String projectTitle);
+
 }
