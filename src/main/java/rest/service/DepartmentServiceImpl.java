@@ -43,4 +43,9 @@ public class DepartmentServiceImpl implements DepartmentService{
     public List<Worker> getAllWorkersByDepartmentName(String departmentName) {
         return departmentDAO.getAllWorkersByDepartmentName(departmentName);
     }
+
+    @Override
+    public Department getDepartmentWithWorkers(String departmentName) {
+        return departmentDAO.getDepartmentWithWorkers(departmentName);
+    }
 }

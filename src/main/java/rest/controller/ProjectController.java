@@ -20,7 +20,7 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Project>> getAll() {
+    public ResponseEntity<List<Project>> getAllProjects() {
 
         List<Project> projects = projectService.getAllProjects();
 
@@ -32,8 +32,19 @@ public class ProjectController {
     }
 
     @GetMapping(value="/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Project> getWorker(@PathVariable String title) {
+    public ResponseEntity<Project> getProject(@PathVariable String title) {
         Project project = projectService.getProject(title);
+
+        if (project == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(project, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/{title}/workers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Project> getProjectWithWorkers(@PathVariable String title) {
+        Project project = projectService.getProjectWithWorkers(title);
 
         if (project == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -69,7 +69,6 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             department.setId(resultSet.getInt("id"));
             String depart = resultSet.getString("name");
             department.setName(depart);
-            department.setListOfWorkers(getAllWorkersByDepartmentName(depart));
 
             connection.close();
             return department;
@@ -137,6 +136,31 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             }
             connection.close();
             return workerList;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Department getDepartmentWithWorkers(String departmentName) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(
+                    DataBaseUtil.URL, DataBaseUtil.USER, DataBaseUtil.PASSWORD);
+            String SQL = "select id,name from department where name=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, departmentName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Department department = new Department();
+            resultSet.next();
+            department.setId(resultSet.getInt("id"));
+            String depart = resultSet.getString("name");
+            department.setName(depart);
+            department.setListOfWorkers(getAllWorkersByDepartmentName(depart));
+
+            connection.close();
+            return department;
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -17,4 +17,6 @@ public interface ProjectDAO {
     public void updateProject(String projectName, int projectId);
 
     public List<Worker> getAllWorkersByProjectTitle(String projectTitle);
+
+    public Project getProjectWithWorkers(String projectName);
 }

@@ -33,8 +33,19 @@ public class DepartmentController {
     }
 
     @GetMapping(value="/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Department> getWorker(@PathVariable String name) {
+    public ResponseEntity<Department> getDepartment(@PathVariable String name) {
         Department department = departmentService.getDepartment(name);
+
+        if (department == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(department, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/{name}/workers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Department> getDepartmentWithWorkers(@PathVariable String name) {
+        Department department = departmentService.getDepartmentWithWorkers(name);
 
         if (department == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

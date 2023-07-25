@@ -43,4 +43,9 @@ public class ProjectServiceImpl implements ProjectService{
     public List<Worker> getAllWorkersByProjectTitle(String projectTitle) {
         return projectDAO.getAllWorkersByProjectTitle(projectTitle);
     }
+
+    @Override
+    public Project getProjectWithWorkers(String projectName) {
+        return projectDAO.getProjectWithWorkers(projectName);
+    }
 }

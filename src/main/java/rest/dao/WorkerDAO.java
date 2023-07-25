@@ -17,4 +17,6 @@ public interface WorkerDAO {
     public void updateWorker(int workerId, String workerName, int departmentId);
 
     public List<Project> getAllProjectsByWorkerName(String workerName);
+
+    public Worker getWorkerWithProjects(String workerName);
 }

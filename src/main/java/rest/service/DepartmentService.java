@@ -18,4 +18,6 @@ public interface DepartmentService {
     public void updateDepartment(String departmentName, int departmentId);
 
     public List<Worker> getAllWorkersByDepartmentName(String departmentName);
+
+    public Department getDepartmentWithWorkers(String departmentName);
 }

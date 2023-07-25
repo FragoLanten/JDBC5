@@ -19,4 +19,5 @@ public interface ProjectService {
 
     public List<Worker> getAllWorkersByProjectTitle(String projectTitle);
 
+    public Project getProjectWithWorkers(String projectName);
 }

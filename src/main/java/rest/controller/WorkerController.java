@@ -36,6 +36,17 @@ public class WorkerController {
     @GetMapping(value="/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Worker> getWorker(@PathVariable String name) {
         Worker worker = workerService.getWorker(name);
+        if (worker == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(worker, HttpStatus.OK);
+    }
+    @GetMapping(value="/{name}/projects", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Worker> getWorkerWithProjects(@PathVariable String name) {
+        Worker worker = workerService.getWorkerWithProjects(name);
+        if (worker == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         return new ResponseEntity<>(worker, HttpStatus.OK);
     }
 }

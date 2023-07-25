@@ -43,4 +43,9 @@ public class WorkerServiceImpl implements WorkerService{
     public List<Project> getAllProjectsByWorkerName(String workerName) {
         return workerDAO.getAllProjectsByWorkerName(workerName);
     }
+
+    @Override
+    public Worker getWorkerWithProjects(String workerName) {
+        return workerDAO.getWorkerWithProjects(workerName);
+    }
 }

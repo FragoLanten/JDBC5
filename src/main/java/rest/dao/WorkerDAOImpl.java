@@ -73,7 +73,6 @@ public class WorkerDAOImpl implements WorkerDAO {
             resultSet.next();
             worker.setId(resultSet.getInt("id"));
             worker.setName(resultSet.getString("name"));
-            worker.setProjectList(getAllProjectsByWorkerName(workerName));
 
             connection.close();
             return worker;
@@ -144,6 +143,30 @@ public class WorkerDAOImpl implements WorkerDAO {
             }
             connection.close();
             return projectList;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Worker getWorkerWithProjects(String workerName) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(
+                    DataBaseUtil.URL, DataBaseUtil.USER, DataBaseUtil.PASSWORD);
+            String SQL = "select id,name from worker where name=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, workerName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Worker worker = new Worker();
+            resultSet.next();
+            worker.setId(resultSet.getInt("id"));
+            worker.setName(resultSet.getString("name"));
+            worker.setProjectList(getAllProjectsByWorkerName(workerName));
+
+            connection.close();
+            return worker;
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -70,7 +70,6 @@ public class ProjectDAOImpl implements ProjectDAO {
             project.setId(resultSet.getInt("id"));
             String projectTitle = resultSet.getString("title");
             project.setTitle(projectTitle);
-            project.setWorkerList(getAllWorkersByProjectTitle(projectTitle));
 
             connection.close();
             return project;
@@ -139,6 +138,31 @@ public class ProjectDAOImpl implements ProjectDAO {
             }
             connection.close();
             return workerList;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Project getProjectWithWorkers(String projectName) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(
+                    DataBaseUtil.URL, DataBaseUtil.USER, DataBaseUtil.PASSWORD);
+            String SQL = "select id,title from project where title=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, projectName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Project project = new Project();
+            resultSet.next();
+            project.setId(resultSet.getInt("id"));
+            String projectTitle = resultSet.getString("title");
+            project.setTitle(projectTitle);
+            project.setWorkerList(getAllWorkersByProjectTitle(projectTitle));
+
+            connection.close();
+            return project;
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
